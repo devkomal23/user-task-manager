@@ -7,16 +7,17 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index(Request $request) {
+  public function index(Request $request) {
         $query = Task::with('user');
 
-        // Requirement: Filters
-        if ($request->has('status') && $request->status != '') {
+        // 2. Apply the filter ONLY if a status is selected
+        if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
-        $tasks = $query->get();
-        $tasks = Task::with('user')->paginate(2);
+        // 3. Paginate the $query (Don't use Task::with again)
+        $tasks = $query->paginate(2); 
+
         return view('tasks.index', compact('tasks'));
     }
 
