@@ -1,59 +1,74 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+User & Task Management System
+A robust Laravel 12 application designed to manage users and their associated tasks. This project demonstrates CRUD operations, data validation, Eloquent relationships, and RESTful API integration.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+🚀 Key Features
+User Management:
 
-## About Laravel
+Full CRUD functionality for Users.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Custom validation for mobile numbers (exactly 10 digits).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Real-time task tracking (displays Total and Completed task counts per user).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Task Management:
 
-## Learning Laravel
+Assign tasks to users with specific due dates.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Overdue Logic: Pending tasks past their due date are automatically highlighted in Red with a clear "OVERDUE" badge.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Smart Filtering: Filter the task list by status (Pending or Completed).
 
-## Laravel Sponsors
+Validation: Prevents the creation of tasks with past due dates.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+REST API:
 
-### Premium Partners
+Dedicated endpoint to fetch tasks for a specific user.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+🛠️ Technical Stack
+Backend: Laravel 12 (PHP 8.2+)
 
-## Contributing
+Database: SQLite
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Frontend: Blade Templates & Bootstrap 5
 
-## Code of Conduct
+API: RESTful JSON responses
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+💻 Installation & Local Setup
+Clone the project: git clone https://github.com/devkomal23/user-task-manager.git
 
-## Security Vulnerabilities
+Install dependencies: composer install
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Configure Environment: cp .env.example .env php artisan key:generate
 
-## License
+Database Setup:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Create the SQLite file: touch database/database.sqlite
+
+Run migrations: php artisan migrate
+
+Start the server: php artisan serve Visit the app at: http://localhost:8000/users
+
+📡 API Documentation
+Get Tasks by User
+Retrieves all tasks assigned to a specific user.
+
+Endpoint: GET /api/users/{id}/tasks
+
+Method: GET
+
+Success Response (200 OK): [ { "id": 1, "user_id": 10, "title": "Submit Final Project", "due_date": "2024-05-25", "status": "pending" } ]
+
+📋 Assignment Requirements Checklist
+[x] User CRUD (Name, Email, 10-digit Mobile).
+
+[x] Task CRUD (Title, User ID, Due Date, Status).
+
+[x] Task Status Filter.
+
+[x] Overdue task highlighting (Red background).
+
+[x] Eloquent Relationship (User hasMany Tasks).
+
+[x] REST API implementation.
+
+[x] 100% "Without Vendor" submission compliant.

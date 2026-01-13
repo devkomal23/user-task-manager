@@ -24,40 +24,52 @@
         <tr>
             <th>Title</th>
             <th>Assigned To</th>
-            <th>Due Date</th>
             <th>Status</th>
+            <th>Due Date</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($tasks as $task)
-        @php
-            $isOverdue = $task->due_date < date('Y-m-d') && $task->status == 'pending';
-        @endphp
-        <tr class="{{ $isOverdue ? 'table-danger' : '' }}">
-            <td>{{ $task->title }}</td>
-            <td>{{ Str::limit($task->description, 30) }}</td> <td>
-                <span class="badge {{ $task->status == 'completed' ? 'bg-success' : 'bg-warning' }}">
-                     {{ ucfirst($task->status) }}
-                </span>
-             </td>
-            <td>{{ $task->user->name }}</td>
-            <td>
-                {{ $task->due_date }}
-                @if($isOverdue) <span class="badge bg-danger">OVERDUE</span> @endif
-            </td>
-            <td>
-                <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
-                    <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                    @csrf @method('DELETE')
-                    <button class="btn btn-sm btn-danger">Delete</button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
+        @forelse($tasks as $task)
+            @php
+                $isOverdue = $task->due_date < date('Y-m-d') && $task->status == 'pending';
+            @endphp
+            <tr class="{{ $isOverdue ? 'table-danger' : '' }}">
+                <td><strong>{{ $task->title }}</strong></td>
+
+                <td>{{ $task->user->name ?? 'Unassigned' }}</td>
+
+                <td>
+                    <span class="badge {{ $task->status == 'completed' ? 'bg-success' : 'bg-warning' }}">
+                        {{ ucfirst($task->status) }}
+                    </span>
+                </td>
+
+                <td>
+                    {{ $task->due_date }}
+                    @if($isOverdue) 
+                        <span class="badge bg-danger">OVERDUE</span> 
+                    @endif
+                </td>
+
+                <td>
+                    <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" onsubmit="return confirm('Are you sure?')">
+                        <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        @csrf 
+                        @method('DELETE')
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="5" class="text-center">No tasks found.</td>
+            </tr>
+        @endforelse
     </tbody>
 </table>
+
 <div class="d-flex justify-content-end mt-3">
-    {{ $tasks->links() }}
+    {{ $tasks->appends(request()->query())->links() }}
 </div>
 @endsection
